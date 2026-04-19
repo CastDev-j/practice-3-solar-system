@@ -235,6 +235,22 @@ export class PlanetSystem {
     return [this.sunMesh, ...this.planetMeshes];
   }
 
+  updateWireframe(wireframe: boolean): void {
+    this.meshes.forEach((mesh) => {
+      if (mesh instanceof THREE.Mesh) {
+        if (Array.isArray(mesh.material)) {
+          mesh.material.forEach((mat) => {
+            if ("wireframe" in mat) {
+              mat.wireframe = wireframe;
+            }
+          });
+        } else if ("wireframe" in mesh.material) {
+          mesh.material.wireframe = wireframe;
+        }
+      }
+    });
+  }
+
   updateElapseTime(elapsedTime: number, dt: number): void {
     const currentRealTime = performance.now() / 1000;
     const realDt = Math.min(currentRealTime - this.lastRealTime, 0.033);

@@ -33,15 +33,7 @@ renderer.animate(() => {
 });
 
 gui.add(config, "wireframe").onChange((value: boolean) => {
-  planetSystem.meshes.forEach((mesh) => {
-    if (mesh instanceof THREE.Mesh) {
-      if (Array.isArray(mesh.material)) {
-        mesh.material.forEach((mat) => (mat.wireframe = value));
-      } else {
-        mesh.material.wireframe = value;
-      }
-    }
-  });
+  planetSystem.updateWireframe(value);
 });
 gui
   .add(config, "speed", 0, 100)
