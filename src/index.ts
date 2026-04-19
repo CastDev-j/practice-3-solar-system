@@ -32,7 +32,17 @@ renderer.animate(() => {
   planetSystem.updateElapseTime(elapsedTime * 0.1, deltaTime * 0.1);
 });
 
-gui.add(config, "wireframe").onChange((value: boolean) => {});
+gui.add(config, "wireframe").onChange((value: boolean) => {
+  planetSystem.meshes.forEach((mesh) => {
+    if (mesh instanceof THREE.Mesh) {
+      if (Array.isArray(mesh.material)) {
+        mesh.material.forEach((mat) => (mat.wireframe = value));
+      } else {
+        mesh.material.wireframe = value;
+      }
+    }
+  });
+});
 gui
   .add(config, "speed", 0, 100)
   .step(0.1)
