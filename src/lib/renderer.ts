@@ -16,7 +16,7 @@ export class Renderer {
     const width = canvas.clientWidth;
     const height = canvas.clientHeight;
     this.camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-    this.camera.position.z = 5;
+    this.camera.position.y = 50;
 
     this.renderer = new THREE.WebGLRenderer({
       canvas,

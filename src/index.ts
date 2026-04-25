@@ -14,7 +14,6 @@ const renderer = new Renderer(canvas);
 
 const config = {
   wireframe: false,
-  speed: 1,
 };
 
 const planetSystem = new PlanetSystem();
@@ -29,15 +28,97 @@ renderer.scene.add(...planetSystem.meshes);
 renderer.animate(() => {
   const elapsedTime = clock.getElapsedTime();
   const deltaTime = clock.getDelta();
-  planetSystem.updateElapseTime(elapsedTime * 0.1, deltaTime * 0.1);
+  planetSystem.updateElapseTime(elapsedTime * 100);
 });
 
 gui.add(config, "wireframe").onChange((value: boolean) => {
   planetSystem.updateWireframe(value);
 });
-gui
-  .add(config, "speed", 0, 100)
-  .step(0.1)
+
+const massFolder = gui.addFolder("Masas de Planetas");
+
+
+
+const planetMasses = {
+  sun: planetSystem.getSunMass(),
+  mercury: planetSystem.getPlanetMass("mercury"),
+  venus: planetSystem.getPlanetMass("venus"),
+  earth: planetSystem.getPlanetMass("earth"),
+  mars: planetSystem.getPlanetMass("mars"),
+  jupiter: planetSystem.getPlanetMass("jupiter"),
+  saturn: planetSystem.getPlanetMass("saturn"),
+  uranus: planetSystem.getPlanetMass("uranus"),
+  neptune: planetSystem.getPlanetMass("neptune"),
+};
+
+massFolder
+  .add(planetMasses, "sun", 1, 1.98892e30)
+  .step(1e23)
+  .name("Sol")
   .onChange((value: number) => {
-    planetSystem.config.simulationSpeed = value;
+    planetSystem.updateSunMass(value);
+  });
+
+massFolder
+  .add(planetMasses, "mercury", 1, 1.98892e30)
+  .step(1e23)
+  .name("Mercurio")
+  .onChange((value: number) => {
+    planetSystem.updatePlanetMass("mercury", value);
+  });
+
+massFolder
+  .add(planetMasses, "venus", 1, 1.98892e30)
+  .step(1e23)
+  .name("Venus")
+  .onChange((value: number) => {
+    planetSystem.updatePlanetMass("venus", value);
+  });
+
+massFolder
+  .add(planetMasses, "earth", 1, 1.98892e30)
+  .step(1e23)
+  .name("Tierra")
+  .onChange((value: number) => {
+    planetSystem.updatePlanetMass("earth", value);
+  });
+
+massFolder
+  .add(planetMasses, "mars", 1, 1.98892e30)
+  .step(1e23)
+  .name("Marte")
+  .onChange((value: number) => {
+    planetSystem.updatePlanetMass("mars", value);
+  });
+
+massFolder
+  .add(planetMasses, "jupiter", 1, 1.98892e30)
+  .step(1e26)
+  .name("Júpiter")
+  .onChange((value: number) => {
+    planetSystem.updatePlanetMass("jupiter", value);
+  });
+
+massFolder
+  .add(planetMasses, "saturn", 1, 1.98892e30)
+  .step(1e25)
+  .name("Saturno")
+  .onChange((value: number) => {
+    planetSystem.updatePlanetMass("saturn", value);
+  });
+
+massFolder
+  .add(planetMasses, "uranus", 1, 1.98892e30)
+  .step(1e24)
+  .name("Urano")
+  .onChange((value: number) => {
+    planetSystem.updatePlanetMass("uranus", value);
+  });
+
+massFolder
+  .add(planetMasses, "neptune", 1, 1.98892e30)
+  .step(1e24)
+  .name("Neptuno")
+  .onChange((value: number) => {
+    planetSystem.updatePlanetMass("neptune", value);
   });
